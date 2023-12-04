@@ -1,0 +1,21 @@
+type ChatRoom @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Messages: [Message] @hasMany(indexName: "byChatRoom", fields: ["id"])
+  Users: [User] @hasMany(indexName: "byChatRoom", fields: ["id"])
+}
+
+type Message @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  text: String!
+  createdAt: AWSDateTime!
+  chatroomID: ID! @index(name: "byChatRoom", sortKeyFields:["createdAt"], queryField:"listMessagesByChatRoom")
+  userID: ID! @index(name: "byUser")
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  Messages: [Message] @hasMany(indexName: "byUser", fields: ["id"])
+  chatroomID: ID @index(name: "byChatRoom")
+}
+ 

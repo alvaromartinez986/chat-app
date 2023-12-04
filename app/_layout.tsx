@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import Colors from "../constants/Colors";
 import Title from "../components/Title";
+import { AppProvider } from "../provider/AppContext";
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -51,35 +52,37 @@ function RootLayoutNav() {
 	const colorScheme = useColorScheme();
 
 	return (
-		<ThemeProvider
-			value={
-				colorScheme === "dark"
-					? DarkTheme
-					: DefaultTheme
-			}
-		>
-			<Stack
-				screenOptions={{
-					headerStyle: {
-						backgroundColor: Colors.light.tint,
-					},
-				}}
+		<AppProvider>
+			<ThemeProvider
+				value={
+					colorScheme === "dark"
+						? DarkTheme
+						: DefaultTheme
+				}
 			>
-				<Stack.Screen
-					name="index"
-					options={{
-						headerTitle: (props) => (
-							<Title title="App Chat" />
-						),
+				<Stack
+					screenOptions={{
+						headerStyle: {
+							backgroundColor: Colors.light.tint,
+						},
 					}}
-				/>
-				<Stack.Screen
-					name="chats"
-					options={{
-						title: "Chat Room",
-					}}
-				/>
-			</Stack>
-		</ThemeProvider>
+				>
+					<Stack.Screen
+						name="index"
+						options={{
+							headerTitle: (props) => (
+								<Title title="App Chat" />
+							),
+						}}
+					/>
+					<Stack.Screen
+						name="chats"
+						options={{
+							title: "Chat Room",
+						}}
+					/>
+				</Stack>
+			</ThemeProvider>
+		</AppProvider>
 	);
 }

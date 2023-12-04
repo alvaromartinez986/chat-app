@@ -1,18 +1,18 @@
 import React from "react";
 import { Text, View } from "../Themed";
-import { Message } from "../../types";
 import moment from "moment";
 import styles from "./styles";
+import { useAppContext } from "../../provider/AppContext";
 
-export type ChatMessageProps = {
-	message: Message;
-};
 
 const ChatMessage = ({
 	message,
-}: ChatMessageProps) => {
+}) => {
+	const { user } = useAppContext();
+
 	const isMyMessage = () => {
-		return message.user.id === "u1";
+		return message.userID === user.id;
+
 	};
 
 	return (
@@ -29,12 +29,7 @@ const ChatMessage = ({
 					},
 				]}
 			>
-				{!isMyMessage() && (
-					<Text style={styles.name}>
-						{message.user.name}
-					</Text>
-				)}
-				<Text>{message.content}</Text>
+				<Text>{message.text}</Text>
 				<Text style={styles.time}>
 					{moment(message.createdAt).fromNow()}
 				</Text>
