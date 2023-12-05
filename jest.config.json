@@ -1,0 +1,8 @@
+{
+    "bail": 1,
+    "verbose": true,
+    "preset": "jest-expo" ,
+    "transformIgnorePatterns": [
+        "node_modules/(?!(jest-)?react-native|@react-native-community|expo-constants|expo-permissions|expo-camera|expo-image-picker|@react-native|@unimodules|@react-native-community|@react-navigation)"
+      ]     
+}
